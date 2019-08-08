@@ -230,7 +230,7 @@ class Loop(object):
     """
 
     def __init__(self, loop):
-        self._parts = loop
+        #self._parts = loop
 
         is_open = False
         bases = 0
@@ -241,6 +241,9 @@ class Loop(object):
         stem_list = set()
 
         # calculate stems, bases, and is_open   #loop re-written by EW
+        print "DEBUG: loop ", loop
+        # NAK: duplicates; to be removed
+        duplicates = []
         for step in loop:
             if step is None:
                 is_open = True
@@ -249,10 +252,19 @@ class Loop(object):
                 if struct is None:
                     bases += len(dom)
                 elif struct in stem_list:
-                    raise PeppercornUsageError('Double stem count in Loop() Object.')
+                    #raise PeppercornUsageError('Double stem count in Loop() Object.')
+                    #Mod NAK
+                    duplicates.append(step)
+                    print "WARNING: Double stem count in Loop() Object.", dom, struct, loc, stem_list
                 else :
                     stems += 1
                     stem_list.add(loc)
+
+        #NAK remove duplicates
+        for d in duplicates:
+            loop.remove(d)
+        
+        self._parts = loop
 
         # update cached properties
         self._is_open = is_open
