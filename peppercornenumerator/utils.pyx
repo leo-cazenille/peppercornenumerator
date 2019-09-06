@@ -10,6 +10,7 @@ import sys
 import copy
 import logging
 from math import log10
+from dsdobjects import DL_Domain
 
 SHORT_DOMAIN_LENGTH = 6
 LONG_DOMAIN_LENGTH = 12
@@ -290,7 +291,7 @@ class Loop(object):
     @property
     def structs(self):
         raise DeprecationWarning('SB: Use of Loop.structs has been replaced by Loop.structures.')
-        return self.structures
+        #return self.structures
 
     @property
     def parts(self):
@@ -321,7 +322,7 @@ class Loop(object):
         return self._is_open
 
     def __contains__(self, item):
-        if isinstance(item, Domain):
+        if isinstance(item, DL_Domain):
             return item in self.domains
         elif isinstance(item, tuple):
             return item in self.locs

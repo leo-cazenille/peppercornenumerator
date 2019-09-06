@@ -327,8 +327,10 @@ def bind21(reactant1, reactant2, max_helix = True, remote=None):
     for complex, location1, location2 in reactions:
         # build "before" and "after" loop structures via find_on_loop ...
         out = find_on_loop(complex, location1, 
-            lambda (dom1, struct1, loc1), (dom2, struct2, loc2) : 
-                loc1 == location1 and loc2 == location2)
+#            lambda (dom1, struct1, loc1), (dom2, struct2, loc2) : 
+#                loc1 == location1 and loc2 == location2)
+            lambda param1, param2 : 
+                param1[2] == param1[1] and param2[2] == param2[1])
 
         [(loc1s, before, loc2s, after)] = out
 
@@ -819,13 +821,19 @@ def do_4way_migration(reactant, loc1s, loc2s, loc3s, loc4s):
     return (product.split(), rotations)
 
 # Filter functions for find_on_loop()
-def filter_bind11((dom1, struct1, loc1), (dom2, struct2, loc2)):
+def filter_bind11(param1, param2):
+    (dom1, struct1, loc1) = param1
+    (dom2, struct2, loc2) = param2
     return struct1 is None and struct2 is None and dom2.can_pair(dom1)
 
-def filter_3way((dom1, struct1, loc1), (dom2, struct2, loc2)):
+def filter_3way(param1, param2):
+    (dom1, struct1, loc1) = param1
+    (dom2, struct2, loc2) = param2
     return (struct1 is None) and (struct2 is not None) and dom1.can_pair(dom2)
 
-def filter_4way((dom1, struct1, loc1), (dom2, struct2, loc2)):
+def filter_4way(param1, param2):
+    (dom1, struct1, loc1) = param1
+    (dom2, struct2, loc2) = param2
     return struct1 is not None and struct2 is not None and dom1 == dom2
 
 def find_on_loop(reactant, start_loc, pattern, direction=1):
