@@ -1,7 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 
 from setuptools import setup, find_packages
-from Cython.Build import cythonize
 
 LONG_DESCRIPTION="""
 This package enumerates domain-level strand displacement (DSD) reaction
@@ -15,7 +14,6 @@ the publication [Grun et al. (2014)].
 """
 
 setup(
-    ext_modules = cythonize("peppercornenumerator/*.pyx", language_level=2),
     name='peppercornenumerator',
     version='0.6.2',
     description='Domain-level nucleic acid reaction enumerator',
