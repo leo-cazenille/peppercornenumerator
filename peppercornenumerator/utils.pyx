@@ -242,7 +242,7 @@ class Loop(object):
         stem_list = set()
 
         # calculate stems, bases, and is_open   #loop re-written by EW
-        print "DEBUG: loop ", loop
+        #print "DEBUG: loop ", loop
         # NAK: duplicates; to be removed
         duplicates = []
         for step in loop:
